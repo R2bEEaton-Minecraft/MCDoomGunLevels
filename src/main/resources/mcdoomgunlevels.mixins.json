@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "cc.spea.mcdoomgunlevels.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mcdoomgunlevels.refmap.json",
+  "mixins": [
+    "BulletEntityMixin",
+    "DoomBaseItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
