@@ -7,7 +7,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,9 +23,9 @@ public class DeathEventHandler {
                 int kills = HelperMethods.getKillCount(itemStack);
                 tag.putInt("killCount", kills + 1);
                 itemStack.setTag(tag);
-                // If leveled up, play sound on player
-                if (le instanceof Player plr && HelperMethods.getCurrentLevel(kills) != HelperMethods.getCurrentLevel(kills + 1)) {
-                    plr.level().playSound(null, plr.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL);
+                // If leveled up, play sound
+                if (HelperMethods.getCurrentLevel(kills) != HelperMethods.getCurrentLevel(kills + 1)) {
+                    le.level().playSound(null, le.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL);
                     // plr.displayClientMessage(Component.literal("you leveled up your gun"), false);
                 }
             }
