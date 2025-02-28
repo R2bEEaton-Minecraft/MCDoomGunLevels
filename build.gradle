@@ -20,7 +20,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 version = "${mc_version}-${mod_version}"
-group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'cc.spea.mcdoomgunlevels' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = project.modid
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
