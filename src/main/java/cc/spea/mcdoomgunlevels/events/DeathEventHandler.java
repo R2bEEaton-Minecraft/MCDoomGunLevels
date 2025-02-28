@@ -3,7 +3,6 @@ package cc.spea.mcdoomgunlevels.events;
 import cc.spea.mcdoomgunlevels.helpers.HelperMethods;
 import mod.azure.doom.items.weapons.DoomBaseItem;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +18,7 @@ public class DeathEventHandler {
         Entity e = event.getSource().getEntity();
         if (e instanceof LivingEntity le) {
             ItemStack itemStack = le.getMainHandItem();
-            if (!itemStack.isEmpty() && itemStack.getItem() instanceof DoomBaseItem dbi) {
+            if (!itemStack.isEmpty() && itemStack.getItem() instanceof DoomBaseItem) {
                 // Increment kills
                 CompoundTag tag = itemStack.getOrCreateTag();
                 int kills = HelperMethods.getKillCount(itemStack);
