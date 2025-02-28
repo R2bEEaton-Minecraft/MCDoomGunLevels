@@ -1,5 +1,6 @@
-package cc.spea.mcdoomgunlevels.mixin;
+package cc.spea.mcdoomgunlevels.mixins;
 
+import cc.spea.mcdoomgunlevels.helpers.HelperMethods;
 import cc.spea.mcdoomgunlevels.interfaces.BulletEntityMixinInterface;
 import mod.azure.doom.items.weapons.DoomBaseItem;
 import net.minecraft.ChatFormatting;
@@ -22,27 +23,13 @@ import static cc.spea.mcdoomgunlevels.MCDoomGunLevels.*;
 
 @Mixin(DoomBaseItem.class)
 public class DoomBaseItemMixin {
-
-	private static int getKillCount(ItemStack itemStack) {
-		return itemStack.getOrCreateTag().getInt("killCount");
-	}
-
-	private static int getCurrentLevel(int kills) {
-		long numerator = (long) (-(2 * STARTING_KILLS_FOR_LEVEL - KILLS_FOR_ADDITIONAL_LEVELS) +
-				Math.sqrt(Math.pow(2 * STARTING_KILLS_FOR_LEVEL - KILLS_FOR_ADDITIONAL_LEVELS, 2) +
-						8 * KILLS_FOR_ADDITIONAL_LEVELS * kills));
-		int denominator = 2 * KILLS_FOR_ADDITIONAL_LEVELS;
-		int currentLevel = (int) Math.floorDiv(numerator, denominator);
-		return Math.min(currentLevel, MAX_LEVELS);
-	}
-
 	@Inject(method = "singleFire", at = @At("TAIL"), remap = false, locals = LocalCapture.CAPTURE_FAILHARD)
 	private void singleFire(ItemStack itemStack, Level level, Player player, CallbackInfo ci, Projectile bullet) {
-		int kills = getKillCount(itemStack);
-		int currentLevel = getCurrentLevel(kills);
+		int kills = HelperMethods.getKillCount(itemStack);
+		int currentLevel = HelperMethods.getCurrentLevel(kills);
 
-		player.displayClientMessage(Component.literal("test"), false);
-		player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
+		// player.displayClientMessage(Component.literal("test"), false);
+		// player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
 
 		float newDamage = ((BulletEntityMixinInterface) bullet).getProjectileDamage();
 		for (int i = 1; i <= currentLevel; i++) {
@@ -57,13 +44,13 @@ public class DoomBaseItemMixin {
 
 		((BulletEntityMixinInterface) bullet).setProjectileDamage(newDamage);
 
-		player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
+		// player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
 	}
 
 	@Inject(method = "appendHoverText", at = @At("TAIL"), remap = false)
 	private void appendHoverText(ItemStack itemStack, Level level, List<Component> tooltip, @NotNull TooltipFlag tooltipFlag, CallbackInfo ci) {
-		int kills = getKillCount(itemStack);
-		int currentLevel = getCurrentLevel(kills);
+		int kills = HelperMethods.getKillCount(itemStack);
+		int currentLevel = HelperMethods.getCurrentLevel(kills);
 		double killsForCurrentLevel = currentLevel / 2.0 * (2 * STARTING_KILLS_FOR_LEVEL + KILLS_FOR_ADDITIONAL_LEVELS * (currentLevel - 1));
 		double adjustedKills = kills - killsForCurrentLevel;
 		int killsRequiredForNextLevel = STARTING_KILLS_FOR_LEVEL + (currentLevel * KILLS_FOR_ADDITIONAL_LEVELS);

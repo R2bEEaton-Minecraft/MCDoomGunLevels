@@ -1,4 +1,4 @@
-package cc.spea.mcdoomgunlevels.mixin;
+package cc.spea.mcdoomgunlevels.mixins;
 
 import cc.spea.mcdoomgunlevels.interfaces.BulletEntityMixinInterface;
 import mod.azure.doom.entities.projectiles.BulletEntity;
