@@ -174,11 +174,11 @@ dependencies {
 
     // Examples using mod jars from ./libs
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
-    implementation fg.deobf("curse.maven:mcdoom-368765:5696166")
-    implementation fg.deobf("curse.maven:azurelib-817423:4968637")
-    implementation fg.deobf("curse.maven:custom-portal-api-reforged-902717:5487230")
-    implementation fg.deobf("curse.maven:curios-309927:6238756")
-    implementation fg.deobf("curse.maven:smartbrainlib-661293:5654964")
+    compileOnly fg.deobf("curse.maven:mcdoom-368765:5696166")
+    compileOnly fg.deobf("curse.maven:azurelib-817423:4968637")
+    compileOnly fg.deobf("curse.maven:custom-portal-api-reforged-902717:5487230")
+    compileOnly fg.deobf("curse.maven:curios-309927:6238756")
+    compileOnly fg.deobf("curse.maven:smartbrainlib-661293:5654964")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // For more info...

@@ -23,7 +23,7 @@ import static cc.spea.mcdoomgunlevels.MCDoomGunLevels.*;
 
 @Mixin(DoomBaseItem.class)
 public class DoomBaseItemMixin {
-	@Inject(method = "singleFire", at = @At("TAIL"), remap = false, locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "singleFire", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void singleFire(ItemStack itemStack, Level level, Player player, CallbackInfo ci, Projectile bullet) {
 		int kills = HelperMethods.getKillCount(itemStack);
 		int currentLevel = HelperMethods.getCurrentLevel(kills);
@@ -47,7 +47,7 @@ public class DoomBaseItemMixin {
 		// player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
 	}
 
-	@Inject(method = "appendHoverText", at = @At("TAIL"), remap = false)
+	@Inject(method = "appendHoverText", at = @At("TAIL"))
 	private void appendHoverText(ItemStack itemStack, Level level, List<Component> tooltip, @NotNull TooltipFlag tooltipFlag, CallbackInfo ci) {
 		int kills = HelperMethods.getKillCount(itemStack);
 		int currentLevel = HelperMethods.getCurrentLevel(kills);
