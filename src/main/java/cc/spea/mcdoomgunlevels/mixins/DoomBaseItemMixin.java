@@ -52,7 +52,7 @@ public class DoomBaseItemMixin {
 		int kills = HelperMethods.getKillCount(itemStack);
 		int currentLevel = HelperMethods.getCurrentLevel(kills);
 		double killsForCurrentLevel = currentLevel / 2.0 * (2 * STARTING_KILLS_FOR_LEVEL + KILLS_FOR_ADDITIONAL_LEVELS * (currentLevel - 1));
-		double adjustedKills = kills - killsForCurrentLevel;
+		int adjustedKills = (int) (kills - killsForCurrentLevel);
 		int killsRequiredForNextLevel = STARTING_KILLS_FOR_LEVEL + (currentLevel * KILLS_FOR_ADDITIONAL_LEVELS);
 
 		tooltip.add(Component.translatable("gui.mcdoomgunlevels.level_number", currentLevel, MAX_LEVELS)
