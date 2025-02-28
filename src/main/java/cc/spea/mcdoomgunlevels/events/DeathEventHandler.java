@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -16,6 +17,7 @@ public class DeathEventHandler {
     public void onLivingDeath(LivingDeathEvent event){
         Entity e = event.getSource().getEntity();
         if (e instanceof LivingEntity le) {
+            if (le.level().dimension() != Level.NETHER) return; // Register only kills in nether
             ItemStack itemStack = le.getMainHandItem();
             if (!itemStack.isEmpty() && itemStack.getItem() instanceof DoomBaseItem) {
                 // Increment kills
