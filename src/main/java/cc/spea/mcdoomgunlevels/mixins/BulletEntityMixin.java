@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(BulletEntity.class)
+@Mixin(value = BulletEntity.class, remap = false)
 public class BulletEntityMixin implements BulletEntityMixinInterface {
-    @Shadow(remap = false) private float projectiledamage;
+    @Shadow private float projectiledamage;
 
     @Unique
     public float getProjectileDamage() {

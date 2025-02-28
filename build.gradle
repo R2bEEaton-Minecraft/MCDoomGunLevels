@@ -43,8 +43,6 @@ minecraft {
     // Simply re-run your setup task after changing the mappings to update your workspace.
     mappings channel: 'parchment', version: parch_mapping+"-"+mc_version
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
-
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
@@ -174,11 +172,7 @@ dependencies {
 
     // Examples using mod jars from ./libs
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
-    compileOnly fg.deobf("curse.maven:mcdoom-368765:5696166")
-    compileOnly fg.deobf("curse.maven:azurelib-817423:4968637")
-    compileOnly fg.deobf("curse.maven:custom-portal-api-reforged-902717:5487230")
-    compileOnly fg.deobf("curse.maven:curios-309927:6238756")
-    compileOnly fg.deobf("curse.maven:smartbrainlib-661293:5654964")
+    implementation "curse.maven:mcdoom-368765:5696166"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // For more info...
