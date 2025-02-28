@@ -1,5 +1,6 @@
 package cc.spea.mcdoomgunlevels;
 
+import cc.spea.mcdoomgunlevels.events.DeathEventHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,6 +24,11 @@ public class MCDoomGunLevels
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
+
+    public static final int MAX_LEVELS = 10;
+    public static final int STARTING_KILLS_FOR_LEVEL = 150;
+    public static final int KILLS_FOR_ADDITIONAL_LEVELS = 50;
+
     public MCDoomGunLevels()
     {
         // Register the setup method for modloading
@@ -40,6 +46,7 @@ public class MCDoomGunLevels
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
+        MinecraftForge.EVENT_BUS.register(new DeathEventHandler());
        // LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 

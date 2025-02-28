@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(BulletEntity.class)
 public class BulletEntityMixin implements BulletEntityMixinInterface {
-    @Shadow private float projectiledamage;
+    @Shadow(remap = false) private float projectiledamage;
 
     @Unique
     public float getProjectileDamage() {

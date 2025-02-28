@@ -3,16 +3,23 @@ package cc.spea.mcdoomgunlevels.mixin;
 import cc.spea.mcdoomgunlevels.interfaces.BulletEntityMixinInterface;
 import mod.azure.doom.entities.projectiles.BulletEntity;
 import mod.azure.doom.items.weapons.DoomBaseItem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.List;
+
+import static cc.spea.mcdoomgunlevels.MCDoomGunLevels.*;
 
 @Mixin(DoomBaseItem.class)
 public class DoomBaseItemMixin {
@@ -22,5 +29,33 @@ public class DoomBaseItemMixin {
 		player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
 		((BulletEntityMixinInterface) bullet).setProjectileDamage(100);
 		player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
+	}
+
+	@Inject(method = "appendHoverText", at = @At("TAIL"), remap = false)
+	private void appendHoverText(ItemStack itemStack, Level level, List<Component> tooltip, @NotNull TooltipFlag tooltipFlag, CallbackInfo ci) {
+		if (itemStack.hasTag()) {
+            assert itemStack.getTag() != null;
+            int kills = itemStack.getTag().getInt("killCount");
+			long numerator = (long) (-(2 * STARTING_KILLS_FOR_LEVEL - KILLS_FOR_ADDITIONAL_LEVELS) + Math.sqrt(Math.pow(2 * STARTING_KILLS_FOR_LEVEL - KILLS_FOR_ADDITIONAL_LEVELS, 2) + 8 * KILLS_FOR_ADDITIONAL_LEVELS * kills));
+			int denominator = 2 * KILLS_FOR_ADDITIONAL_LEVELS;
+			int currentLevel = (int) Math.floorDiv(numerator, denominator);
+			double killsForCurrentLevel = currentLevel / 2.0 * (2 * STARTING_KILLS_FOR_LEVEL + KILLS_FOR_ADDITIONAL_LEVELS * (currentLevel - 1));
+			double adjustedKills = kills - killsForCurrentLevel;
+			int killsRequiredForNextLevel = STARTING_KILLS_FOR_LEVEL + (currentLevel * KILLS_FOR_ADDITIONAL_LEVELS);
+
+			tooltip.add(Component.translatable("gui.mcdoomgunlevels.level_number", currentLevel, MAX_LEVELS)
+					.withStyle(ChatFormatting.GOLD));
+			if (currentLevel < MAX_LEVELS) {
+				tooltip.add(Component.translatable("gui.mcdoomgunlevels.next_kills",
+								adjustedKills,
+								killsRequiredForNextLevel
+						)
+						.withStyle(ChatFormatting.GOLD));
+			}
+			tooltip.add(Component.translatable("gui.mcdoomgunlevels.total_kills",
+							kills
+					)
+					.withStyle(ChatFormatting.GOLD));
+		}
 	}
 }
