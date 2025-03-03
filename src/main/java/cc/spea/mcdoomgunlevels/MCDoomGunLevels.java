@@ -26,7 +26,7 @@ public class MCDoomGunLevels
 
 
     public static final int MAX_LEVELS = 10;
-    public static final int STARTING_KILLS_FOR_LEVEL = 150;
+    public static final int STARTING_KILLS_FOR_LEVEL = 50;
     public static final int KILLS_FOR_ADDITIONAL_LEVELS = 50;
 
     public MCDoomGunLevels()

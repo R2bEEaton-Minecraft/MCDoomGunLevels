@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.List;
 
 import static cc.spea.mcdoomgunlevels.MCDoomGunLevels.*;
+import static cc.spea.mcdoomgunlevels.helpers.HelperMethods.getDamageModifier;
 
 @Mixin(value = DoomBaseItem.class, remap = false)
 public class DoomBaseItemMixin {
@@ -32,15 +33,8 @@ public class DoomBaseItemMixin {
 		// player.displayClientMessage(Component.literal(String.valueOf(((BulletEntityMixinInterface) bullet).getProjectileDamage())), false);
 
 		float newDamage = ((BulletEntityMixinInterface) bullet).getProjectileDamage();
-		for (int i = 1; i <= currentLevel; i++) {
-			if (i <= 5) {
-				newDamage += newDamage * 0.05f;
-			} else if (i <= 9) {
-				newDamage += newDamage * 0.1f;
-			} else {
-				newDamage += newDamage * 0.2f;
-			}
-		}
+		float damageModifier = getDamageModifier(currentLevel);
+		newDamage *= damageModifier;
 
 		((BulletEntityMixinInterface) bullet).setProjectileDamage(newDamage);
 
@@ -54,8 +48,9 @@ public class DoomBaseItemMixin {
 		double killsForCurrentLevel = currentLevel / 2.0 * (2 * STARTING_KILLS_FOR_LEVEL + KILLS_FOR_ADDITIONAL_LEVELS * (currentLevel - 1));
 		int adjustedKills = (int) (kills - killsForCurrentLevel);
 		int killsRequiredForNextLevel = STARTING_KILLS_FOR_LEVEL + (currentLevel * KILLS_FOR_ADDITIONAL_LEVELS);
+		float damageModifier = getDamageModifier(currentLevel);
 
-		tooltip.add(Component.translatable("gui.mcdoomgunlevels.level_number", currentLevel, MAX_LEVELS)
+		tooltip.add(Component.translatable("gui.mcdoomgunlevels.level_number", currentLevel, MAX_LEVELS, damageModifier)
 				.withStyle(ChatFormatting.GOLD));
 		if (currentLevel < MAX_LEVELS) {
 			tooltip.add(Component.translatable("gui.mcdoomgunlevels.next_kills", adjustedKills, killsRequiredForNextLevel)
