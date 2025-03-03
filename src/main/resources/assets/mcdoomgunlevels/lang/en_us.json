@@ -1,5 +1,5 @@
 {
-  "gui.mcdoomgunlevels.level_number": "Level %s/%s",
+  "gui.mcdoomgunlevels.level_number": "Level %s/%s (%.2fx)",
   "gui.mcdoomgunlevels.next_kills": "Next Level: %s/%s ☠",
   "gui.mcdoomgunlevels.total_kills": "Total: %s ☠"
 }

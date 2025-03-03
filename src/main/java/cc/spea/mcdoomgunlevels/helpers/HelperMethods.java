@@ -17,4 +17,18 @@ public class HelperMethods {
         int currentLevel = (int) Math.floorDiv(numerator, denominator);
         return Math.min(currentLevel, MAX_LEVELS);
     }
+
+    public static float getDamageModifier(int currentLevel) {
+        float newDamage = 1.0f;
+        for (int i = 1; i <= currentLevel; i++) {
+            if (i <= 5) {
+                newDamage += newDamage * 0.05f;
+            } else if (i <= 9) {
+                newDamage += newDamage * 0.1f;
+            } else {
+                newDamage += newDamage * 0.2f;
+            }
+        }
+        return newDamage;
+    }
 }
